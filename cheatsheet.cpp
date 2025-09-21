@@ -219,3 +219,102 @@ int* p = new int[SIZE]; // Allocates an array of SIZE integers in the heap
 // To do so, we use the delete operator:
 delete ptr1;
 delete [] p; // Frees the array of integers allocated in the heap
+
+
+// Structures with constructors:
+
+// Define types and operations with them:
+
+struct gridPoint {
+  int x;
+  int y;
+};
+
+
+void gridPointPrint(grid_point that_point) {
+  std::cout << "(" << that_point.x << ", " << that_point.y << ")" << std::endl;
+}
+
+void gridPointInit(gridPoint* that_point, int x, int y) {
+  (*that_point).x = x;
+  that_point->y = y; // THis is a syntactic sugar for (*that_point).y... use it !
+}
+
+// Or equivalently:
+void gridPointInit(gridPoint& that_point, int& x, int& y) {
+  that_point.x = x;
+  that_point.y = y;
+}
+
+
+// Actually, we can define constructors for our structures:
+struct gridPoint {
+  int x;
+  int y;
+
+  // Constructor:
+  gridPoint(int& x, int& y) {
+    this->x = x; // 'this' is a pointer to the current object
+    this->y = y;
+  }
+};
+
+
+
+// Cleaner:
+
+struct gridPoint {
+  int x;
+  int y;
+
+  // Constructor:
+  gridPoint(const int x,const  int y) : x(x), y(y) {} // Syntax available for constructors
+
+  gridPoint(const gridPoint& other_point) : x(other_point.x), y(other_point.y) {} // Copy constructor
+
+  gridPoint() : x(0), y(0) {} // Default constructor
+
+  // Now we can define methods for our structure:
+  void raz () {
+    this->x = 0;
+    y = 0; // 'this->' is optional here as there is no ambiguity
+  }
+
+  gridPoint add(const gridPoint& other_point) const { // 'const' means that this method doesn't modify the object, it's the
+                                                      // equivalent of putting const before the type of the argument but for
+                                                      // the object itself (this)
+    gridPoint res{this->x + other_point.x, this->y + other_point.y};
+    return res;
+  }
+
+  int dot_product(const gridPoint& other_point) const {
+    return this->x * other_point.x + this->y * other_point.y;
+  }
+
+  gridPoint sub(const gridPoint& other_point) const {
+    gridPoint res{this->x - other_point.x, this->y - other_point.y};
+    return res;
+  }
+
+  int distance2(const gridPoint& other_point) const {
+    gridPoint tmp = this->sub(other_point); // this can be omitted
+    return tmp.dot_product(tmp);
+  }
+
+  bool is_equal(const gridPoint& other_point) const {
+    return this->x == other_point.x && this->y == other_point.y;
+  }
+
+  // We can also make static methods that don't need an object to be called:
+  static int distance2(const gridPoint& p1, const gridPoint& p2) {
+    gridPoint tmp = p1.sub(p2);
+    return tmp.dot_product(tmp);
+  }
+
+  
+
+};
+
+// We can call the methods like this:
+gridPoint::distance2(...); // Explicitly using the class name for a static method
+
