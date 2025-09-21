@@ -121,10 +121,101 @@ Outside of the scope of the function, the variable will be modified to be 0.
 */
 
 
-// Scopes
-
-/*  
-Permet de manipuler une pile. En C++, les variables sont des valeurs stockées en mémoire
+// Pointers:
 
 
+// Get the address of a variable and print it:
+int a = 5;
+std::cout << &a << std::endl; // prints the memory address of variable a
+
+// Store the address of a variable in a pointer:
+int* p = &a; // p is a pointer to an integer, initialized with the address of a
+
+// p is also stored in a slot on the stack, which contains the address of a, and then we can do
+std::cout << &p << std::endl; // prints the memory address of pointer p
+
+// And... we can also store the address of the pointer p in another pointer:
+int** pp = &p; // pp is a pointer to a pointer to an integer
+
+
+// Pointers manipulations:
+
+// Get an object that we know only by its address:
+
+int a = 5;
+int* p = &a; // p is a pointer to an integer, initialized with the address of a
+
+std::cout << *p << std::endl; // prints the value of variable a (5) by dereferencing the pointer p
+
+
+// Even assignment works:
+*p = 3; // assigns the value 3 to variable a by dereferencing the pointer p
+std::cout << a << std::endl; // prints 3
+
+
+// /!\ Do not mix up *ptr and ptr* 
+
+// Pointers as iterators:
+
+// Iterators is an important concept in C++.
+// An iterator is an object that points to an element in a container (like an array, a vector, etc.)
+// and allows to traverse the elements of the container.
+
+// Pointers can be used as iterators:
+
+#define SIZE 10
+
+int tab[SIZE]; // Declare an array of 10 integers (uninitialized)
+
+for(int i = O; i < SIZE; ++i) 
+    tab[i] = 2*i + 1; // Initialize the array with values 0 to 9
+
+// tab is actually a pointer to the first element of the array
+
+std::out << tab << std::endl; // prints the address of the first element of the array
+
+int* ptr = tab; // ptr is a pointer to the first element of the array
+
+// Pointer increment:
+int* a = tab;
+int* b = a + 1; // Addition on pointers doesn't actually add 1 (or any other number that you put)
+// It adds the size of the type pointed to (here int, typically 4 bytes)
+// So b points to the next integer in the array
+int* c = a + 2; // c points to the second next integer in the array
+int* d = a + 3; // d points to the third next integer in the array
+// And so on... to access each element of the array
+
+// Print variable size:
+
+std::cout << sizeof(a) << std::endl; // prints the size of variable a in bytes (typically 4 bytes for int)
+
+
+// Copy an array:
+
+
+/*
+Of course, since tab is a pointer to the first element of the array, it is not allowed to
+do just tab = tib and expect to copy the content of the array tib into the content of the array tab.
+It woudln't even be allowed as tab is not a variable, but a constant pointer to the first element of the array.
+
+We need to copy each element one by one, using iterators (pointers in this case).
 */
+
+num* it_tab = tab;
+it_tib = tib;
+// end_tib is already available from previous code.
+while(it_tib != end_tib)
+  *(it_tab++) = *(it_tib++);
+
+
+// Pointers to memory in the heap (= "tas" (while stack = "pile" in French))
+
+int* p = new int[SIZE]; // Allocates an array of SIZE integers in the heap
+
+
+// /!\ Don't forget to free the memory when done !! It will not be the same as the stack memory 
+// that is automatically freed when the function returns
+
+// To do so, we use the delete operator:
+delete ptr1;
+delete [] p; // Frees the array of integers allocated in the heap
