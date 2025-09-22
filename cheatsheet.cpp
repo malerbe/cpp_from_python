@@ -1,5 +1,8 @@
 #include <iostream>  // Allows for writing to the terminal... and much more.
 
+// Compile
+g++ -o test -std=c++17 main.cpp
+
 // Printing to console
 std::cout << "Hello world" << std::endl // Prints Hello World + newline
 
@@ -34,7 +37,17 @@ int a = 5;
 c = ++a; // Pre-increment: a + 1, then assign to c. a is now 6, c is 6
 int a = 5;
 c = a++; // Post-increment: assign a to c, then a + 1
-// In both cases, a is incremented (a becomes 6), but c = 6 in the first case and c = 5 in the second
+// In both cases, a is incremented (a becomes 6), but c = 6 in the first case and c = 5 in the se
+
+// Conditions:
+
+if(condition) {
+
+} else if(condition){
+
+} else {
+
+}
 
 // Loops:
 
