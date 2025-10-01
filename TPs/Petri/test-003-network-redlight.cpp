@@ -2,6 +2,7 @@
 #include <petri.hpp>
 #include <iterator>
 #include <random>
+#include <fstream>
 
 int main(int argc, char* argv[]) {
   std::random_device rd;
@@ -33,7 +34,6 @@ int main(int argc, char* argv[]) {
 
   }
 
-
   
   /*
      Output expected :
@@ -47,8 +47,10 @@ int main(int argc, char* argv[]) {
      turns orange
      turns red
      turns green
-
   */
+
+  std::ofstream file("redlight.dot");
+  file << redlight; // redlight is a petri::Network
 
   return 0;
 }
